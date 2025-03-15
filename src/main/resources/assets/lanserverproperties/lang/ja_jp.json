@@ -1,0 +1,11 @@
+{
+  "lanserverproperties.gui.online_mode": "オフラインプレイヤーの入場を許可するかどうか",
+  "lanserverproperties.gui.online_mode_desc": "このオプションでは、正規版以外（オフライン）プレイヤーの参加を許可するように設定されています",
+  "lanserverproperties.gui.port": "オンラインポート番号",
+  "lanserverproperties.gui.allow": "許可する",
+  "lanserverproperties.gui.notallow": "許可しない",
+  "lanserverproperties.gui.port_error": "ⓧ:数値でなければならず、ポート番号は数値でなければならず、1023より大きい65535",
+  "lanserverproperties.gui.port_warm": "(!):49152より大きいことはお勧めしません",
+  "lanserverproperties.gui.port_msg": "端口信息",
+  "lanserverproperties.gui.no_problem": "✓:ポートは正常です"
+}

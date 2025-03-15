@@ -1,0 +1,11 @@
+{
+  "lanserverproperties.gui.online_mode": "是否允許非正版玩家進入",
+  "lanserverproperties.gui.online_mode_desc": "此選項將設定是允許非正版（離線）玩家加入",
+  "lanserverproperties.gui.port": "上線埠號",
+  "lanserverproperties.gui.allow": "允許",
+  "lanserverproperties.gui.notallow": "不允許",
+  "lanserverproperties.gui.port_error": "ⓧ:必須是一個數位且埠號必須是一個數位且大於1023小於65535",
+  "lanserverproperties.gui.port_warm": "(!):埠號不建議大於49152",
+  "lanserverproperties.gui.port_msg": "端口信息",
+  "lanserverproperties.gui.no_problem": "✓:埠正常"
+}

@@ -1,0 +1,11 @@
+{
+  "lanserverproperties.gui.online_mode": "容否非正版之玩家以入乎",
+  "lanserverproperties.gui.online_mode_desc": "此选项，设以容非正版（离线）玩家加入。",
+  "lanserverproperties.gui.port": "启用之网路之门户编号",
+  "lanserverproperties.gui.allow": "准",
+  "lanserverproperties.gui.notallow": "不许",
+  "lanserverproperties.gui.port_error": "必為數字且端口號必為數字且大於一千零二十三小於六萬五千五百三十五",
+  "lanserverproperties.gui.port_warm": "不宜大於四萬九千一百五十二",
+  "lanserverproperties.gui.port_msg": "端口信息",
+  "lanserverproperties.gui.no_problem": "✓:端口正常"
+}

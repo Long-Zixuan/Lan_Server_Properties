@@ -1,0 +1,11 @@
+{
+  "lanserverproperties.gui.online_mode": "Allow offline players to enter",
+  "lanserverproperties.gui.online_mode_desc": "This option will be set to allow offline players to join",
+  "lanserverproperties.gui.port": "Port",
+  "lanserverproperties.gui.allow": "Allow",
+  "lanserverproperties.gui.notallow": "Not Allow",
+  "lanserverproperties.gui.port_error": "ⓧ:It must be a number and the port number must be a number greater than 1023 and less than 65535",
+  "lanserverproperties.gui.port_warm": "(!):It is not recommended to be greater than 49152",
+  "lanserverproperties.gui.port_msg": "Port Message",
+  "lanserverproperties.gui.no_problem": "✓:Port is normal"
+}

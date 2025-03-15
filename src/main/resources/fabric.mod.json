@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "id": "lanserverproperties",
+  "version": "${version}",
+
+  "name": "自定义联机 (Lan Server Properties)",
+  "description": "增强了原版Minecraft“打开局域网”设置：\n1.允许端口自定义\n2.允许用户禁用在线模式，这样未经身份验证的玩家也可以加入局域网服务器。\n3.允许离线玩家进入多人游戏模式\nEnhanced the original Minecraft 'Open LAN' setting:\n1. Allow port customization\n2. Allow users to disable online mode, so that unauthenticated players can also join the LAN server.\n3. Allow offline players to enter multiplayer mode",
+  "authors": [
+    "Rikka0w0",
+    "LoongLy"
+  ],
+  "contact": {
+    "homepage": "https://github.com/Long-Zixuan/MC_LSP_MOD",
+    "sources": "https://github.com/rikka0w0/LanServerProperties/"
+  },
+
+  "license": "CC0-1.0",
+  "icon": "assets/lanserverproperties/lsp_logo.png",
+
+  "environment": "*",
+  "mixins": [
+    "lsp.mixins.json"
+  ],
+
+  "depends": {
+    "fabricloader": ">=0.7.4",
+    "minecraft": "1.16.x"
+  },
+  "suggests": {
+    "flamingo": "*"
+  }
+}
