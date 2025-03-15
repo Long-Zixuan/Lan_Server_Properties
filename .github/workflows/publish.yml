@@ -1,0 +1,162 @@
+name: Build and Publish
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: write
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+      with:
+        submodules: true
+
+    - name: Set up JDK 21
+      uses: actions/setup-java@v3
+      with:
+        java-version: '21'
+        distribution: 'temurin'
+
+    - name: Make Gradle Wrapper Executable
+      if: ${{ runner.os != 'Windows' }}
+      run: |
+        chmod +x ./forge/gradlew
+        chmod +x ./neoforge/gradlew
+        chmod +x ./fabric/gradlew
+
+    - name: Build Forge
+      run: cd forge && ./gradlew prepareInfo build && cd ..
+
+    - name: Build Neoforge
+      run: cd neoforge && ./gradlew prepareInfo build && cd ..
+
+    - name: Build Fabric
+      run: cd fabric && ./gradlew prepareInfo build && cd ..
+
+    - name: Prepare Github release Info
+      run: cd fabric && ./gradlew githubDraft && cd ..
+
+    - name: Get Info and Perform Substitutions
+      run: |
+        # Parse xxx/build/info/properties.txt into key-value pairs
+        # Strip leading and trailing spaces and tabs, remove comments
+        function parse_gradle_props() {
+          grep -v '^\s*#' $1 | sed -e 's/^[ \t]*//;s/[ \t]*$//' | sed -e 's/[ \t]*=[ \t]*/=/' | grep -E -v '^[^=]*\.[^=]*='
+        }
+
+        # Get the value of a key ($2) from a given prop set ($1)
+        function props_get() {
+          echo "$1" | grep "^$2=" | cut -d '=' -f 2-
+        }
+
+        # Set environmental variables from the given property set
+        function props_apply() {
+          echo "Setting the environmental variables:"
+          while IFS= read -r line; do
+            # Skip empty lines
+            [[ "$line" == "" ]] && continue
+
+            key=$(echo "$line" | cut -d= -f1)
+            value=$(echo "$line" | cut -d= -f2-)
+
+            export "$key"="$value"
+            echo "$key"="$value"
+          done <<< "$1"
+          echo ''
+        }
+
+        # Add a key-value pair ($1=$2) to the Github Action environment
+        function set_action_env() {
+          echo "$1"="$2" >> $GITHUB_ENV
+        }
+
+        # Read target specific properties
+        FABRIC_PROPS=$(parse_gradle_props fabric/build/info/properties.txt)
+        FORGE_PROPS=$(parse_gradle_props forge/build/info/properties.txt)
+        NEOFORGE_PROPS=$(parse_gradle_props neoforge/build/info/properties.txt)
+
+        # Generate dynamic strings based on the build configuration
+        # Github
+        set_action_env "GITHUB_RELEASE_TITLE" "$(cat fabric/build/info/githubTitle.txt)"
+        set_action_env "GITHUB_TAG_NAME" "$(cat fabric/build/info/githubTagName.txt)"
+
+        # CurseForge
+        # Fabric
+        props_apply "$FABRIC_PROPS"
+        set_action_env "CURSEFORGE_FABRIC_MC" "[${minecraft_version_min}, ${minecraft_version_max})"
+        set_action_env "CURSEFORGE_FABRIC" "${minecraft_version}-${mod_version}-fabric"
+        set_action_env "CURSEFORGE_FABRICAPI" "306612@${fabric_version}(required)"
+
+        # Neoforge
+        props_apply "$NEOFORGE_PROPS"
+        set_action_env "CURSEFORGE_NEOFORGE_MC" "[${minecraft_version_min}, ${minecraft_version_max})"
+        set_action_env "CURSEFORGE_NEOFORGE" "${minecraft_version}-${mod_version}-neoforge"
+
+        # Forge
+        props_apply "$FORGE_PROPS"
+        set_action_env "CURSEFORGE_FORGE_MC" "[${minecraft_version_min}, ${minecraft_version_max})"
+        set_action_env "CURSEFORGE_FORGE" "${minecraft_version}-${mod_version}-forge"
+
+    - name: Publish to GitHub
+      uses: Kir-Antipov/mc-publish@v3.3
+      with:
+        name: ${{ env.GITHUB_RELEASE_TITLE }}
+        changelog-file: fabric/build/info/githubDraft.md
+
+        # Only include this section if you wish to publish your assets on GitHub.
+        github-tag: ${{ env.GITHUB_TAG_NAME }}
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        github-draft: true
+
+        files: |
+          forge/build/libs/!(*-@(dev|sources|javadoc)).jar
+          neoforge/build/libs/!(*-@(dev|sources|javadoc)).jar
+          fabric/build/libs/!(*-@(dev|sources|javadoc)).jar
+
+    - name: Publish to CurseForge (Fabric version)
+      uses: Kir-Antipov/mc-publish@v3.3
+      with:
+        changelog-file: fabric/build/info/CHANGELOG_FULL.md
+        # Only include this section if you wish to publish your assets on CurseForge.
+        curseforge-id: 387365
+        curseforge-token: "${{ secrets.CURSEFORGE_TOKEN }}"
+
+        name: ${{ env.CURSEFORGE_FABRIC }}
+        loaders: fabric
+        version-type: release
+        files: fabric/build/libs/!(*-@(dev|sources|javadoc)).jar
+        java: Java 21
+        curseforge-dependencies: ${{ env.CURSEFORGE_FABRICAPI }}
+
+    - name: Publish to CurseForge (Neoforge version)
+      uses: Kir-Antipov/mc-publish@v3.3
+      with:
+        changelog-file: neoforge/build/info/CHANGELOG_FULL.md
+        # Only include this section if you wish to publish your assets on CurseForge.
+        curseforge-id: 387365
+        curseforge-token: "${{ secrets.CURSEFORGE_TOKEN }}"
+
+        name: ${{ env.CURSEFORGE_NEOFORGE }}
+        loaders: neoforge
+        version-type: beta
+        files: neoforge/build/libs/!(*-@(dev|sources|javadoc)).jar
+        java: Java 21
+
+    - name: Publish to CurseForge (Forge version)
+      uses: Kir-Antipov/mc-publish@v3.3
+      with:
+        changelog-file: forge/build/info/CHANGELOG_FULL.md
+        # Only include this section if you wish to publish your assets on CurseForge.
+        curseforge-id: 387365
+        curseforge-token: "${{ secrets.CURSEFORGE_TOKEN }}"
+
+        name: ${{ env.CURSEFORGE_FORGE }}
+        loaders: forge
+        version-type: beta
+        files: forge/build/libs/!(*-@(dev|sources|javadoc)).jar
+        java: Java 21

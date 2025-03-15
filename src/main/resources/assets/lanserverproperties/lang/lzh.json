@@ -1,0 +1,20 @@
+{
+  "lanserverproperties.options.online_mode": "容否非正版之玩家以入乎",
+  "lanserverproperties.options.online_mode.on": "不许非正版之玩家以入",
+  "lanserverproperties.options.online_mode.on.message": "启在线之式唯许微软/Mojang之户登者入吾服",
+  "lanserverproperties.options.online_mode.off.vanilla": "准非正版之玩家以入",
+  "lanserverproperties.options.online_mode.off.vanilla.message": "废在线之式，则容非正版之玩家入也。",
+  "lanserverproperties.options.online_mode.off.fixed": "离线模式+UUID修复",
+  "lanserverproperties.options.online_mode.off.fixed.message": "此式容众人皆得入吾服，兼保微软/Mojang户之UUID。若汝由在线式转迁，宜用此式，以防行囊与物栏之物遗落也。",
+  "lanserverproperties.options.preference_enabled": "自动识取旧存之配置。",
+  "lanserverproperties.options.preference_enabled.message": "启此窗之时，自动识取旧存之配置，惟于服未启时生效。服既启，则此页默显当前服之配置。",
+  "lanserverproperties.button.lan_server_options": "局域网服之配置",
+  "lanserverproperties.button.preference_load": "自旧存之配置中读取",
+  "lanserverproperties.button.preference_save": "谨存其配置",
+
+  "lanserverproperties.gui.pvp_allowed": "允许PvP",
+  "lanserverproperties.gui.port_listening": "已开端口:",
+  "lanserverproperties.gui.port": "监听端口:",
+  "lanserverproperties.gui.max_player": "最多可容纳玩家之数：",
+  "lanserverproperties.gui.always_offline": "强令离线式之玩家名录",
+  "lanserverproperties.gui.always_offline.message": "于本名录，用空格分之，惟于‘离线式+UUID修缮式’中方有效。若遇离线之玩家与已注册之正版玩家名相犯，可将离线玩家之名录于此。"}

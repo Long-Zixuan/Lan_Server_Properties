@@ -1,0 +1,139 @@
+plugins {
+	id 'fabric-loom' version '1.8-SNAPSHOT'
+	id 'maven-publish'
+	id 'me.shedaniel.unified-publishing' version '0.1.+'
+}
+
+apply from: '../common.gradle'
+
+dependencies {
+	//to change the versions see the gradle.properties file
+	minecraft "com.mojang:minecraft:${project.minecraft_version}"
+	mappings loom.officialMojangMappings()
+	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+
+	// Fabric API. This is technically optional, but you probably want it anyway.
+	modRuntimeOnly "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+
+	// javax.annotation.Nullable
+	modImplementation 'com.google.code.findbugs:jsr305:3.0.1'
+}
+
+sourceCompatibility = JavaVersion.VERSION_21
+targetCompatibility = JavaVersion.VERSION_21
+
+archivesBaseName = project.archives_base_name
+version = project.mod_version
+group = project.dev_group
+
+processResources {
+	inputs.property "version", project.version
+
+	filesMatching("fabric.mod.json") {
+		expand project.mergedProperties
+	}
+}
+
+// configure  the source folders
+sourceSets {
+	main {
+		java {
+			srcDir "../src/main/java"
+		}
+		resources {
+			srcDir "../src/main/resources"
+			exclude '.cache'
+			exclude 'Thumbs.db'
+		}
+	}
+}
+
+// ensure that the encoding is set to UTF-8, no matter what the system default is
+// this fixes some edge cases with special characters not displaying correctly
+// see http://yodaconditions.net/blog/fix-for-java-file-encoding-problems-with-gradle.html
+tasks.withType(JavaCompile).configureEach {
+	options.encoding = "UTF-8"
+
+	// Minecraft 1.20.5 and upwards uses Java 21.
+	it.options.release = 21
+}
+
+java {
+	// Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task
+	// if it is present.
+	// If you remove this line, sources will not be generated.
+	withSourcesJar()
+}
+
+jar {
+	from "LICENSE"
+
+	manifest {
+		attributes('Implementation-Timestamp': new Date().toString())
+	}
+}
+
+// https://github.com/FabricMC/fabric-loom/issues/452
+afterEvaluate {
+	tasks.remapJar {
+		archiveClassifier.set("fabric")
+	}
+}
+
+publishUnified.dependsOn mergeChangelog
+publishUnified.inputs.files(mergeChangelog.outputs)
+publishUnified.mustRunAfter(mergeChangelog)
+
+unifiedPublishing {
+	project {
+		displayName = "${project.archives_base_name}-${project.mod_version}-fabric"
+		version = "${project.mod_version}"
+		changelog.set(project.changelogProvider)
+		releaseType = "release" // Use "release", "beta" or "alpha"
+		gameVersions = project.enumeratedMcVersions
+		gameLoaders = ["fabric"]
+
+		mainPublication tasks.remapJar // Declares the publicated jar
+
+		relations {
+			depends { // Mark as a required dependency
+				curseforge = "fabric-api"
+				modrinth = "fabric-api"
+			}
+		}
+
+		if (project.curseforgeApiToken != null) {
+			curseforge {
+				token = project.curseforgeApiToken
+				id = "387365"
+			}
+		}
+
+		if (project.modrinthApiToken != null) {
+			modrinth {
+				token = project.modrinthApiToken
+				id = "P7dR8mSH" // Required, must be a string, ID of Modrinth project
+			}
+		}
+	}
+}
+
+import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Files;
+import net.fabricmc.loom.LoomGradleExtension;
+tasks.register("yarn-mc-jar") {
+  description = 'Display the path of the yarn-mapped vanilla Minecraft'
+
+  doLast {
+	LoomGradleExtension loom = getProject().getExtensions().getByType(LoomGradleExtension.class);
+	Path compiledJar = loom.getMappingsProvider().mappedProvider.getMappedJar().toPath();
+	println 'The yarn Minecraft jar is located at:'
+	println compiledJar
+
+	Dependency dependency = project.getDependencies().create(project.dev_group+":obf2mcp");
+		Set<File> files = project.getConfigurations().detachedConfiguration(dependency).resolve();
+		File file = com.google.common.collect.Iterables.getOnlyElement(files);
+		println file.toPath()
+	}
+}

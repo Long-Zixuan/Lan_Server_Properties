@@ -1,0 +1,21 @@
+{
+  "lanserverproperties.options.online_mode": "オンラインモード",
+  "lanserverproperties.options.online_mode.on": "オンラインモード：有効",
+  "lanserverproperties.options.online_mode.on.message": "オンラインモードを有効にすると,Microsoft/Mojangアカウントを使用してログインしたプレイヤーだけが本サーバに参加することができます",
+  "lanserverproperties.options.online_mode.off.vanilla": "オンラインモード：オフ",
+  "lanserverproperties.options.online_mode.off.vanilla.message": "オンラインモードを無効にすると,非正規プレイヤーが参加することができます.",
+  "lanserverproperties.options.online_mode.off.fixed": "オフラインモード+UUID修復",
+  "lanserverproperties.options.online_mode.off.fixed.message": "このモードを使用すると,マイクロソフト/Mojangアカウントを使用してログインしたユーザーのために誰でも本サーバに参加できます。オンラインモードから移行している場合は,このモードを使用すると,リュックサックやアイテムバーの内容が失われるのを防ぐことができます",
+  "lanserverproperties.options.preference_enabled": "既存の構成を自動的に読み込む",
+  "lanserverproperties.options.preference_enabled.message": "このウィンドウを開くと既存の構成が自動的に読み込まれ,サーバがオープンしていない場合にのみ有効になり,サーバがオープンするとこのページには現在のサーバ構成がデフォルトで表示されます",
+  "lanserverproperties.button.lan_server_options": "LANサーバ構成",
+  "lanserverproperties.button.preference_load": "既存の構成から読み込む",
+  "lanserverproperties.button.preference_save": "構成を保存",
+  
+  "lanserverproperties.gui.pvp_allowed": "PvPを許可する",
+  "lanserverproperties.gui.port_listening": "オープンポート:",
+  "lanserverproperties.gui.port": "リスニング・ポート：",
+  "lanserverproperties.gui.max_player": "最大プレイヤー数:",
+  "lanserverproperties.gui.always_offline": "オフラインモードを強制するプレイヤー名リスト",
+  "lanserverproperties.gui.always_offline.message": "このリストではスペースで区切る,オフラインモード+UUID修復モード でのみ有効です。オフラインプレイヤーと登録済みの正規版プレイヤー名の衝突が発生した場合は,オフラインプレイヤー名をここに加えることができます"
+  }

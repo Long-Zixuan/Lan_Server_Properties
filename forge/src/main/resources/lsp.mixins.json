@@ -1,0 +1,13 @@
+{
+	"required": true,
+	"package": "rikka.lanserverproperties.mixin",
+	"compatibilityLevel": "JAVA_17",
+	"refmap": "lsp.refmap.json",
+	"client": [
+		"MixinOpenToLanScreen",
+		"MixinUUIDUtil",
+		"PlayerListAccessor",
+		"WidgetHeightAccessor"
+	],
+	"minVersion": "0.8"
+}

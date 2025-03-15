@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "id": "lanserverproperties",
+  "version": "${mod_version}",
+
+  "name": "自定义联机(Lan Server Properties)",
+  "description": "增强了原版Minecraft“打开局域网”屏幕：\n1.允许端口自定义\n2.允许用户禁用在线模式，这样未经身份验证的玩家也可以加入局域网服务器。\nEnhances the vanilla Minecraft \"Open to LAN\" screen, which now also:\n1. Allows for a port customization\n2. Allows a user to disable the online mode, so that also unauthenticated players can join the LAN server.",
+  "authors": [
+    "Rikka0w0",
+    "LoongLy"
+  ],
+  "contact": {
+    "homepage": "https://www.curseforge.com/minecraft/mc-mods/lan-server-properties/",
+    "sources": "https://github.com/rikka0w0/LanServerProperties/"
+  },
+
+  "license": "CC0-1.0",
+  "icon": "lsp_logo.png",
+
+  "environment": "*",
+  "mixins": [
+    "lsp.mixins.json"
+  ],
+
+  "depends": {
+    "minecraft": ">=${minecraft_version_min} <${minecraft_version_max}",
+    "fabricloader": ">=${loader_version_min}"
+  },
+  "suggests": {
+    "flamingo": "*"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "lanserverproperties.options.online_mode":  "線上模式",
+  "lanserverproperties.options.online_mode.on":  "線上模式：啟用",
+  "lanserverproperties.options.online_mode.on.message":  "啟用線上模式將只允許使用微軟/Mojang帳戶登入的玩家加入本服務器.",
+  "lanserverproperties.options.online_mode.off.vanilla":  "線上模式：關閉",
+  "lanserverproperties.options.online_mode.off.vanilla.message":  "禁用線上模式將允許非正版玩家加入.",
+  "lanserverproperties.options.online_mode.off.fixed":  "離線模式+UUID修復",
+  "lanserverproperties.options.online_mode.off.fixed.message":  "此模式將允許任何人加入本服務器,同時為使用微軟/Mojang帳戶登入的用戶保留UUID.如果您正在從線上模式遷移,請使用此模式,它可以防止背包和物品欄內容遺失.",
+  "lanserverproperties.options.preference_enabled":  "自動讀取已存配寘",
+  "lanserverproperties.options.preference_enabled.message":  "打開本視窗時自動讀取已存配寘,只在服務器未開放時生效,服務器開放後本頁面默認顯示當前伺服器配置.",
+  "lanserverproperties.button.lan_server_options":  "局域網伺服器配置",
+  "lanserverproperties.button.preference_load":  "從已存配寘讀取",
+  "lanserverproperties.button.preference_save":  "保存配寘",
+  
+  "lanserverproperties.gui.pvp_allowed":  "允許PvP",
+  "lanserverproperties.gui.port_listening":  "已開埠：",
+  "lanserverproperties.gui.port":  "監聽埠：",
+  "lanserverproperties.gui.max_player":  "最大玩家數：",
+  "lanserverproperties.gui.always_offline":  "強制離線模式的玩家名清單",
+  "lanserverproperties.gui.always_offline.message":  "在本清單使用空格分隔,只在'離線模式+UUID修復模式'中有效.若發生離線玩家與已注册的正版版玩家名字衝突,可將離線玩家名字加入這裡."
+  }
